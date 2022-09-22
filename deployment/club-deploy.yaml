@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: flomesh-poc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: c1-club
+    project: poc
+  name: c1-club
+  namespace: flomesh-poc
+spec:
+  ports:
+  - name: app
+    port: 8092
+    protocol: TCP
+    targetPort: 8092
+  selector:
+    app: c1-club
+    project: poc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: c1-club
+  namespace: flomesh-poc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: poc
+      app: c1-club
+  template:
+    metadata:
+      labels:
+        project: poc
+        app: c1-club
+    spec:
+      containers:
+      - name: c1-club
+        image: spurringworld/c1-club:v1.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: EUREKA_URL
+          value: "http://10.9.0.7:31000/eureka"
+        - name: CLUSTER1_GATEWAY_URL
+          value: "http://10.9.0.12:8888"
+          

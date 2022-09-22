@@ -1,0 +1,18 @@
+server:
+  port: 8761
+
+eureka:
+  server:
+    enable-self-preservation: true
+    renewalPercentThreshold: 0.49
+  client:
+    register-with-eureka: false #是否将自己注册到eureka-server默认为true
+    fetch-registry: false #是否从注册中心获取注册信息，默认为true
+  instance: 
+    leaseRenewalIntervalInSeconds: 30
+
+spring:
+  security:
+    user:
+      name: test
+      password: abc123

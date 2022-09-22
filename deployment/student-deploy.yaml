@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: flomesh-poc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: c-students
+    project: poc
+  name: c-students
+  namespace: flomesh-poc
+spec:
+  ports:
+  - name: app
+    port: 8091
+    protocol: TCP
+    targetPort: 8091
+  selector:
+    app: c-students
+    project: poc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: c-students
+  namespace: flomesh-poc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: poc
+      app: c-students
+  template:
+    metadata:
+      labels:
+        project: poc
+        app: c-students
+    spec:
+      containers:
+      - name: c-students
+        image: spurringworld/c-student:v1.2
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: EUREKA_URL
+          value: "http://10.9.0.7:31000/eureka"
+        - name: CLUSTER1_GATEWAY_URL
+          value: "http://10.9.0.12:8888"
+          
