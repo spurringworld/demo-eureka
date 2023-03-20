@@ -9,7 +9,7 @@ eureka:
   client:
     serviceUrl: 
       defaultZone: ${EUREKA_URL}
-      # defaultZone: http://test:abc123@localhost:8761/eureka
+      # defaultZone: http://test:abc123@10.9.0.12:8761/eureka
   instance:
     # 优先使用IP地址方式进行注册服务
     prefer-ip-address: true
@@ -17,3 +17,4 @@ eureka:
 cluster2:
   gateway:
     url: ${CLUSTER2_GATEWAY_URL}
+    # url: http://10.9.0.12:28083

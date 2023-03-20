@@ -31,4 +31,18 @@ public class ScoreController {
 		return list;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("test/hello")
+	public String testHello(
+		@RequestParam(value="teacher", required=false) String teacher,
+		@RequestParam(value="msg", required=true) String msg) {
+		System.out.println("======>>> testHello");
+		
+		return "Hello " +  teacher + ", got you msg: " + msg;
+	}
+
 }
