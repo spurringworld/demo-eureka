@@ -1,6 +1,7 @@
 package com.flomesh.poc.xbx.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,10 @@ public class SchoolController {
 	public List<SchoolVO> getSchools(){
 		System.out.println("======>>> get schools");
 		List<SchoolVO> list = new ArrayList<SchoolVO>();
-		list.add(new SchoolVO(1, "高新实验学校--","大连高新园区小平岛128号"));
-		list.add(new SchoolVO(2, "大连第24中学--", "大连中山区长江路55号"));
+		list.add(new SchoolVO(1, "高新实验学校","大连高新园区小平岛128号"));
+		list.add(new SchoolVO(2, "大连第24中学", "大连中山区长江路55号"));
 		list.add(new SchoolVO(3, "大连第23中心--", "大连甘井子区泉水街19号"));
+		list.add(new SchoolVO(4, "大连王府高中--", "大连天地软件园26号"));
 		// if(schoolId > 0){
 		// 	return list.stream().filter(s->s.getId()==schoolId).collect(Collectors.toList());
 		// }
@@ -85,6 +87,13 @@ public class SchoolController {
 	@GetMapping("schools/{id}/teachers")
 	public SchoolVO getTeachers4School(@PathVariable(value="id") int id){
 		System.out.println("======>>> get teachers for a school");
+		try { 
+			System.out.println(new Date() + "\n"); 
+			Thread.sleep(1000*3);   // 休眠3秒
+			System.out.println(new Date() + "\n"); 
+		 } catch (Exception e) { 
+			 System.out.println("Got an exception!"); 
+		 }
 		SchoolVO sVo = this.getSchoolById(id);
 		if(sVo != null){
 			ServiceInstance serviceInstance = loadBalancerClient.choose("f-teacher");
