@@ -1,6 +1,7 @@
 package com.flomesh.poc.xbx.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,13 @@ public class TeacherController {
 	@GetMapping("teachers")
 	public List<TeacherVO> getTeachers(@RequestParam(value="schoolId", required=false, defaultValue="0") int schoolId ){
 		System.out.println("======>>> get teachers");
+		try { 
+			System.out.println(new Date() + "\n"); 
+			Thread.sleep(1000*1);   // 休眠3秒
+			System.out.println(new Date() + "\n"); 
+		 } catch (Exception e) { 
+			 System.out.println("Got an exception!"); 
+		 }
 		List<TeacherVO> list = new ArrayList<TeacherVO>();
 		list.add(new TeacherVO(1, "孔子","高级",55,2, "kongzi@test.com"));
 		list.add(new TeacherVO(2, "莫言","高级",44,2, "moyan@test.com"));
