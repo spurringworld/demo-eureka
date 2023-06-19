@@ -123,4 +123,29 @@ public class SchoolController {
 		return restTemplate.getForObject(url, String.class);
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("schools/test/hello")
+	public String testTeacher(){
+		System.out.println("======>>> test from schools svc...");
+		// call teacher
+		ServiceInstance serviceInstance = loadBalancerClient.choose("f-teacher");
+		String url = "http://" + serviceInstance.getHost() + ":" 
+				+ serviceInstance.getPort() 
+				+ "/sayHello?teacherId=3&msg=testttt";
+		System.out.println(url);
+		restTemplate.getForObject(url, String.class);
+		// call student students/{id}/scores
+		ServiceInstance studentSvc = loadBalancerClient.choose("c-student");
+		String studentUrl = "http://" + studentSvc.getHost() + ":"  + studentSvc.getPort() 
+				+ "/sayHello";
+		System.out.println(studentUrl);
+		restTemplate.getForObject(url, String.class);
+
+		return "success!!!";
+	}
+
 }
