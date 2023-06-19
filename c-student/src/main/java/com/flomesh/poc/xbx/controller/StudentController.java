@@ -96,4 +96,20 @@ public class StudentController {
 		return result;
 	}
 
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("sayHello")
+	public String sayHello() {
+		System.out.println("======>>> student sayHello");
+		ServiceInstance serviceInstance = loadBalancerClient.choose("d-score");
+		String url = "http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort() 
+				+ "/test/hello?teacher=STUDENT&msg=I_AM_A_STUDENT";
+		System.out.println(url);
+		return restTemplate.getForObject(url, String.class);
+	}
+
 }
